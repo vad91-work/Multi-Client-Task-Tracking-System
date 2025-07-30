@@ -78,8 +78,30 @@ void *client_func(void *arg)
     //free var client_sock_ptr
     free(arg);
 
-    
-    printf("Client connected.\n");
+    //get length of operation
+    int protocol_len;
+    recv(client_sock, &protocol_len, sizeof(protocol_len), 0);
+
+    //get name of operation
+    char protocol[protocol_len+1];
+    recv(client_sock, protocol, protocol_len, 0);
+    protocol[protocol_len] = '\0';
+
+    if(strcmp(protocol, "REGISTER") == 0){ //1 REGISTER <username> <password>
+        register_user(client_sock);
+    } else if (strcmp(protocol, "LOGIN") == 0){ //2 LOGIN <usename> <password>
+
+    } else if (strcmp(protocol, "GET_TASK") == 0){ //3 GET_TASKS <user_token>
+
+    } else if (strcmp(protocol, "CREATE") == 0){ //4 CREATE <user_token> <task_name> <description>
+        
+    } else if (strcmp(protocol, "UPDATE") == 0){ //5 UPDATE <user_token> <task_id> <status>
+        
+    } else if (strcmp(protocol, "DELETE") == 0){ //6 DELETE <user_token> <task_id>
+        
+    } else { //send error
+
+    }
 
     //close client socket
     close(client_sock);
@@ -87,3 +109,46 @@ void *client_func(void *arg)
     pthread_exit(NULL);
     return NULL;
 }
+
+//function register new user
+int register_user(int client_sock)
+{
+    int len;
+    ssize_t bytes_recv = recv(client_sock, &len, sizeof(len), 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    //get username
+    char username[len+1];
+    bytes_recv = recv(client_sock, username, len, 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    username[len] = '\0';
+
+    
+    //get password len
+    bytes_recv = recv(client_sock, &len, sizeof(len), 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    //get password
+    char password[len + 1];
+    bytes_recv = recv(client_sock, password, len, 0);
+
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    password[len] = '\0';
+
+}
+
+
