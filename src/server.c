@@ -51,7 +51,34 @@ int main(void)
 
         
 
+        int *client_sock_ptr = malloc(sizeof(int));
+        *client_sock_ptr = client_sock;
+
+        //create a thread id
+        pthread_t tid;
+        //start thread
+        pthread_create(&tid, NULL, client_func, (void *)client_sock_ptr);
+
+        //free thread without join
+        pthread_detach(tid);
     }
 
     return EXIT_SUCCESS;
+}
+
+
+
+void *client_func(void *arg)
+{
+    //save value to local var
+    int client_sock = *(int *)arg;
+    
+    //free var client_sock_ptr
+    free(arg);
+
+    
+
+    //close thread
+    pthread_exit(NULL);
+    return NULL;
 }

@@ -22,4 +22,6 @@
 #define OP_LEN 15
 #define MAX_CONN 500
 
+void *client_func(void *arg);
+
 #endif
