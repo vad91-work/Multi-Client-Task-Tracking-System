@@ -79,7 +79,7 @@ void *client_func(void *arg)
     free(arg);
 
     
-
+    printf("Client connected.\n");
 
     //close client socket
     close(client_sock);
