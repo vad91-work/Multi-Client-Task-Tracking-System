@@ -10,10 +10,8 @@ all: $(EXEC)
 
 $(EXEC): $(OBJ)
 	$(CC) $(OPTIONS) -o $@ $^
-bin/%.o: src/%.c | bin
+bin/%.o: src/%.c
 	$(CC) $(OPTIONS) -c $< -o $@
-bin:
-	mkdir -p bin
 clean:
 	rm -f $(OBJ) $(EXEC)
 
