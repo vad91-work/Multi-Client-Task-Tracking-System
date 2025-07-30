@@ -79,7 +79,7 @@ void *client_func(void *arg)
     free(arg);
 
     //get length of operation
-    int protocol_len;
+    uint32_t protocol_len;
     recv(client_sock, &protocol_len, sizeof(protocol_len), 0);
 
     //get name of operation
@@ -87,6 +87,7 @@ void *client_func(void *arg)
     recv(client_sock, protocol, protocol_len, 0);
     protocol[protocol_len] = '\0';
 
+    
     if(strcmp(protocol, "REGISTER") == 0){ //1 REGISTER <username> <password>
         register_user(client_sock);
     } else if (strcmp(protocol, "LOGIN") == 0){ //2 LOGIN <usename> <password>
@@ -100,7 +101,7 @@ void *client_func(void *arg)
     } else if (strcmp(protocol, "DELETE") == 0){ //6 DELETE <user_token> <task_id>
         
     } else { //send error
-
+        
     }
 
     //close client socket
@@ -149,6 +150,8 @@ int register_user(int client_sock)
 
     password[len] = '\0';
 
+
+    return 0;
 }
 
 

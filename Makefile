@@ -1,8 +1,8 @@
 
 
 CC = gcc
-OPTIONS = -Wall -Wextra -Iinclude -g
-SRC = src/server.c
+OPTIONS = -Wall -Wextra -Iinclude -g -lmysqlclient
+SRC = src/server.c src/database.c
 OBJ = $(patsubst src/%.c, bin/%.o, $(SRC))
 EXEC = bin/server
 

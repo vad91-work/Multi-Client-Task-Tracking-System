@@ -17,11 +17,15 @@
 
 #include <pthread.h>
 
+#include "database.h"
+
 #define LOCAL_HOST "127.0.0.1"
 #define PORT 4444
 #define OP_LEN 15
 #define MAX_CONN 500
 #define PROTOCOL_HEADER_LEN 10
+
+
 
 void *client_func(void *arg);
 
