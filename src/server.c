@@ -41,7 +41,7 @@ int main(void)
     while(1)
     {
         struct sockaddr_in cl_addr;
-        size_t addr_len = sizeof(cl_addr);
+        socklen_t addr_len = sizeof(cl_addr);
         int client_sock = accept(serv_sock, (struct sockaddr *)&cl_addr, &addr_len);
         if(client_sock<=0)
         {
