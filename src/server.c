@@ -63,6 +63,8 @@ int main(void)
         pthread_detach(tid);
     }
 
+    //close server socket
+    close(serv_sock);
     return EXIT_SUCCESS;
 }
 
@@ -78,7 +80,10 @@ void *client_func(void *arg)
 
     
 
-    //close thread
+
+    //close client socket
+    close(client_sock);
+    // close thread
     pthread_exit(NULL);
     return NULL;
 }
