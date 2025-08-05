@@ -121,45 +121,17 @@ void *client_func(void *arg)
 //function register new user
 int register_user(int client_sock)
 {
-    int len;
-    ssize_t bytes_recv = recv(client_sock, &len, sizeof(len), 0);
-    if(bytes_recv<=0)
+
+    user_t current_user;
+
+    if(get_user_and_password(client_sock, &current_user))
     {
-        return -1;
+        
     }
-
-    //get username
-    char username[len+1];
-    bytes_recv = recv(client_sock, username, len, 0);
-    if(bytes_recv<=0)
-    {
-        return -1;
-    }
-
-    username[len] = '\0';
-
-    
-    //get password len
-    bytes_recv = recv(client_sock, &len, sizeof(len), 0);
-    if(bytes_recv<=0)
-    {
-        return -1;
-    }
-
-    //get password
-    char password[len + 1];
-    bytes_recv = recv(client_sock, password, len, 0);
-
-    if(bytes_recv<=0)
-    {
-        return -1;
-    }
-
-    password[len] = '\0';
 
     char status[8] = "SUCCESS";
     char return_status = EXIT_SUCCESS;
-    if (register_user_db(username, password))
+    if (register_user_db(current_user.username, current_user.password))
     {
         strcpy(status, "FAIL");
         return_status = EXIT_FAILURE;
@@ -170,11 +142,53 @@ int register_user(int client_sock)
     return return_status;
 }
 
+
+int get_user_and_password(int client_sock, user_t *user)
+{
+    int len;
+    ssize_t bytes_recv = recv(client_sock, &len, sizeof(len), 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    //get username
+    bytes_recv = recv(client_sock, user->username, len, 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    user->username[len] = '\0';
+
+    
+    //get password len
+    bytes_recv = recv(client_sock, &len, sizeof(len), 0);
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    //get password
+    bytes_recv = recv(client_sock, user->password, len, 0);
+
+    if(bytes_recv<=0)
+    {
+        return -1;
+    }
+
+    user->password[len] = '\0';
+
+    return EXIT_SUCCESS;
+}
+
 //login to server
 int login_user(int client_sock)
 {
+    user_t current_user;
+    get_user_and_password(client_sock, &current_user);
 
-
+    
 
     return EXIT_SUCCESS;
 }
