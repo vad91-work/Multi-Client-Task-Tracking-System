@@ -3,7 +3,6 @@
 #include "server.h"
 
 
-
 int main(void)
 {
 
@@ -68,8 +67,6 @@ int main(void)
     return EXIT_SUCCESS;
 }
 
-
-
 void *client_func(void *arg)
 {
     //save value to local var
@@ -91,17 +88,22 @@ void *client_func(void *arg)
     if(strcmp(protocol, "REGISTER") == 0){ //1 REGISTER <username> <password>
         register_user(client_sock);
     } else if (strcmp(protocol, "LOGIN") == 0){ //2 LOGIN <usename> <password>
-
-    } else if (strcmp(protocol, "GET_TASK") == 0){ //3 GET_TASKS <user_token>
-
-    } else if (strcmp(protocol, "CREATE") == 0){ //4 CREATE <user_token> <task_name> <description>
-        
-    } else if (strcmp(protocol, "UPDATE") == 0){ //5 UPDATE <user_token> <task_id> <status>
-        
-    } else if (strcmp(protocol, "DELETE") == 0){ //6 DELETE <user_token> <task_id>
-        
-    } else { //send error
-        
+        login_user(client_sock);
+    }
+    else if (strcmp(protocol, "GET_TASK") == 0)
+    { // 3 GET_TASKS <user_token>
+    }
+    else if (strcmp(protocol, "CREATE") == 0)
+    { // 4 CREATE <user_token> <task_name> <description>
+    }
+    else if (strcmp(protocol, "UPDATE") == 0)
+    { // 5 UPDATE <user_token> <task_id> <status>
+    }
+    else if (strcmp(protocol, "DELETE") == 0)
+    { // 6 DELETE <user_token> <task_id>
+    }
+    else
+    { // send error
     }
 
     //close client socket
@@ -150,8 +152,24 @@ int register_user(int client_sock)
 
     password[len] = '\0';
 
+    char status[8] = "SUCCESS";
+    char return_status = EXIT_SUCCESS;
+    if (register_user_db(username, password))
+    {
+        strcpy(status, "FAIL");
+        return_status = EXIT_FAILURE;
+    }
 
-    return 0;
+    send(client_sock, status, strlen(status), 0);
+
+    return return_status;
 }
 
+//login to server
+int login_user(int client_sock)
+{
 
+
+
+    return EXIT_SUCCESS;
+}

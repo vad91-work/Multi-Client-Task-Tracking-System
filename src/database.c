@@ -28,11 +28,31 @@ int init_database(void)
 
 }
 
-
 void close_conn(void)
 {
     mysql_close(conn);
 }
 
+int register_user_db(char *username, char password)
+{
 
+    
+    char insert_final_query[200];
 
+    char escape_user[128], escape_pass[128];
+
+    mysql_real_escape_string(conn, escape_user, username, strlen(username));
+    mysql_real_escape_string(conn, escape_pass, password, strlen(password));
+
+    sprintf(insert_final_query, "INSERT INTO users(username, password) VALUES ('%s', '%s')", username, password);
+
+    int rs = mysql_query(conn, insert_final_query);
+
+    if(rs)
+    {
+        fprintf(stderr, "Insert failed: %s\n", mysql_error(conn));
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
