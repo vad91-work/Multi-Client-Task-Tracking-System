@@ -38,7 +38,9 @@ typedef struct user_s user_t;
 
 user_t logged_users[MAX_CONN];
 
-void *
-client_func(void *arg);
+void *client_func(void *arg);
+int register_user(int client_sock);
+int get_user_and_password(int client_sock, user_t *user);
+int login_user(int client_sock);
 
 #endif

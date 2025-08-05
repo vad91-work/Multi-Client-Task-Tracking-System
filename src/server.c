@@ -142,7 +142,7 @@ int register_user(int client_sock)
     return return_status;
 }
 
-
+//function that fill data for user_t
 int get_user_and_password(int client_sock, user_t *user)
 {
     int len;
@@ -188,7 +188,7 @@ int login_user(int client_sock)
     user_t current_user;
     get_user_and_password(client_sock, &current_user);
 
-    
+
 
     return EXIT_SUCCESS;
 }
