@@ -3,7 +3,7 @@
 #include "database.h"
 
 
-
+//init database
 int init_database(void)
 {
     conn = mysql_init(NULL);
@@ -28,6 +28,7 @@ int init_database(void)
 
 }
 
+//close db connection
 void close_conn(void)
 {
     mysql_close(conn);

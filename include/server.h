@@ -26,7 +26,19 @@
 #define PROTOCOL_HEADER_LEN 10
 
 
+//user data
+struct user_s{
+    char username[50];
+    char password[60];
+    char token[50];
+};
 
-void *client_func(void *arg);
+//user structure type
+typedef struct user_s user_t;
+
+user_t logged_users[MAX_CONN];
+
+void *
+client_func(void *arg);
 
 #endif

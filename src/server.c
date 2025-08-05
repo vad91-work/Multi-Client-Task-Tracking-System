@@ -5,6 +5,8 @@
 
 int main(void)
 {
+    //init db
+    init_database();
 
     //create a new socket
     int serv_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -64,6 +66,9 @@ int main(void)
 
     //close server socket
     close(serv_sock);
+
+    close_conn();
+
     return EXIT_SUCCESS;
 }
 
